@@ -10,7 +10,7 @@ import {
     Text
 } from '@chakra-ui/react';
 import { useAppSelector } from '../../dux/hooks';
-import { SelectedDetails } from '../../models/store';
+import { ISelectedEntityData } from '../../models/store';
 
 type InforModalProps = {
     isOpen: boolean;
@@ -18,7 +18,7 @@ type InforModalProps = {
 };
 
 function InfoModal({ isOpen, onClose }: InforModalProps): JSX.Element {
-    const selectedDetails = useAppSelector((state) => state.selectedDetails);
+    const selectedDetails = useAppSelector((state) => state.selectedEntityData);
 
     return (
         <>
@@ -29,7 +29,7 @@ function InfoModal({ isOpen, onClose }: InforModalProps): JSX.Element {
                     <ModalCloseButton />
                     <ModalBody>
                         {Object.keys(selectedDetails).map(
-                            (key: keyof SelectedDetails) =>
+                            (key: keyof ISelectedEntityData) =>
                                 selectedDetails[key] && (
                                     <Text
                                         key={key}

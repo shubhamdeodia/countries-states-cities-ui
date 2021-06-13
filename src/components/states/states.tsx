@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../dux/hooks';
 import {
     clearSelectedState,
-    setSelectedDetails,
-    setSelectedState,
+    setSelectedEntityData,
+    setSelectedStateCode,
     toggleInfoModal
 } from '../../dux/reducer';
-import { SelectedDetails } from '../../models/store';
+import { ISelectedEntityData } from '../../models/store';
 import { Container } from '../common/container';
 import useDebounce from '../common/hooks/useDebounce';
 import { useUnmountEffect } from '../common/hooks/useUnmountEffect';
@@ -16,19 +16,21 @@ import { useStates } from './hooks/useStates';
 function States(): JSX.Element {
     const [stateQ, setStateQ] = useState('');
 
-    const selectedStateCode = useAppSelector((state) => state.selectedState);
+    const selectedStateCode = useAppSelector(
+        (state) => state.selectedStateCode
+    );
     const selectedCountryCode = useAppSelector(
-        (state) => state.selectedCountry
+        (state) => state.selectedCountryCode
     );
     const dispatch = useAppDispatch();
 
-    const setSelectedStateCode = (stateCode: string) =>
-        dispatch(setSelectedState(stateCode));
+    const setStateCode = (stateCode: string) =>
+        dispatch(setSelectedStateCode(stateCode));
 
     const clearSelectedStateCode = () => dispatch(clearSelectedState());
 
-    const onOpenModal = (countryDetails: SelectedDetails) => {
-        dispatch(setSelectedDetails({ selectedDetails: countryDetails }));
+    const onOpenModal = (stateData: ISelectedEntityData) => {
+        dispatch(setSelectedEntityData({ selectedEntityData: stateData }));
         dispatch(toggleInfoModal());
     };
 
@@ -67,9 +69,7 @@ function States(): JSX.Element {
                                 name: state.name
                             })
                         }
-                        onClickArrow={() =>
-                            setSelectedStateCode(state.state_code)
-                        }
+                        onClickArrow={() => setStateCode(state.state_code)}
                     />
                 ))}
             </Container>

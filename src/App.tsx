@@ -11,10 +11,12 @@ import { toggleInfoModal } from './dux/reducer';
 const App = (): JSX.Element => {
     // selector
     const selectedCountryCode = useAppSelector(
-        (state) => state.selectedCountry
+        (state) => state.selectedCountryCode
     );
     const isModalOpen = useAppSelector((state) => state.isInfoModalOpen);
-    const selectedStateCode = useAppSelector((state) => state.selectedState);
+    const selectedStateCode = useAppSelector(
+        (state) => state.selectedStateCode
+    );
 
     // dispacther
     const dispatch = useAppDispatch();

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../dux/hooks';
 import {
     clearSelectedCountry,
-    setSelectedCountry,
-    setSelectedDetails,
+    setSelectedCountryCode,
+    setSelectedEntityData,
     toggleInfoModal
 } from '../../dux/reducer';
 import useDebounce from '../common/hooks/useDebounce';
@@ -11,7 +11,7 @@ import { useCountries } from './hooks/useCountries';
 import { Container } from '../common/container';
 import { ListItem } from '../common/list-item';
 import { useUnmountEffect } from '../common/hooks/useUnmountEffect';
-import { SelectedDetails } from '../../models/store';
+import { ISelectedEntityData } from '../../models/store';
 
 function Countries(): JSX.Element {
     // for query param
@@ -25,16 +25,16 @@ function Countries(): JSX.Element {
     const dispatch = useAppDispatch();
 
     // for sharing country name across component
-    const setSelectedCountryCode = (countryCode: string) =>
-        dispatch(setSelectedCountry(countryCode));
+    const setCountryCode = (countryCode: string) =>
+        dispatch(setSelectedCountryCode(countryCode));
 
-    const onOpenModal = (countryDetails: SelectedDetails) => {
-        dispatch(setSelectedDetails({ selectedDetails: countryDetails }));
+    const onOpenModal = (countryData: ISelectedEntityData) => {
+        dispatch(setSelectedEntityData({ selectedEntityData: countryData }));
         dispatch(toggleInfoModal());
     };
 
     const selectedCountryCode = useAppSelector(
-        (state) => state.selectedCountry
+        (state) => state.selectedCountryCode
     );
     const clearSelectedCountryCode = () => dispatch(clearSelectedCountry());
 
@@ -69,9 +69,7 @@ function Countries(): JSX.Element {
                                 capital: country.capital
                             })
                         }
-                        onClickArrow={() =>
-                            setSelectedCountryCode(country.iso2)
-                        }
+                        onClickArrow={() => setCountryCode(country.iso2)}
                     />
                 ))}
             </Container>

@@ -9,7 +9,7 @@
     "webpack": "webpack --",
     "start": "webpack serve --config config/webpack.dev.js --progress",
     "build": "webpack --config=config/webpack.prod.js --progress",
-    "deploy": "npm run build && aws s3 rm s3://countries-states-cities/ --recursive && aws s3 cp ./build s3://countries-states-cities/ --recursive --acl public-read"
+    "deploy": "npm run build && aws s3 rm s3://countries-states-cities/ --recursive && aws s3 cp ./build s3://countries-states-cities/ --recursive"
   },
   "keywords": [
     "React",

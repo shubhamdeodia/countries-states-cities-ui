@@ -3,16 +3,15 @@ import {
     IAppState,
     IActionValueWP,
     CombinedPayloads,
-    ISetDetailsAction,
-    ISetDetailsActionWP
+    ISetEntityDataAction,
+    ISetEntityDataActionWP
 } from '../models/store';
 
 export const initialAppState: IAppState = {
-    selectedState: '',
-    selectedCountry: '',
-    selectedCity: '',
+    selectedStateCode: '',
+    selectedCountryCode: '',
     isInfoModalOpen: false,
-    selectedDetails: {
+    selectedEntityData: {
         latitude: '',
         longitude: '',
         name: '',
@@ -23,32 +22,32 @@ export const initialAppState: IAppState = {
 
 const processSelectedCountry = (state: IAppState, action: IActionValueWP) => ({
     ...state,
-    selectedCountry: action.payload
+    selectedCountryCode: action.payload
 });
 
 const processSelectedState = (state: IAppState, action: IActionValueWP) => ({
     ...state,
-    selectedState: action.payload
+    selectedStateCode: action.payload
 });
 
 const processClearCountry = (state: IAppState) => ({
     ...state,
-    selectedCountry: ''
+    selectedCountryCode: ''
 });
 
 const processClearState = (state: IAppState) => ({
     ...state,
-    selectedState: ''
+    selectedStateCode: ''
 });
 
-const processSelectedDetails = (
+const processSelectedEntityData = (
     state: IAppState,
-    action: ISetDetailsActionWP
+    action: ISetEntityDataActionWP
 ) => ({
     ...state,
     selectedDetails: {
-        ...state.selectedDetails,
-        ...action.payload.selectedDetails
+        ...state.selectedEntityData,
+        ...action.payload.selectedEntityData
     }
 });
 
@@ -64,7 +63,7 @@ export enum Type {
     CLEAR_STATE = 'CLEAR_STATE',
     SET_CITY = 'SET_CITY',
     CLEAR_CITY = 'CLEAR_CITY',
-    SET_MODAL_BODY = 'SET_MODAL_DETAILS',
+    SET_ENTITY_DATA = 'SET_ENTITY_DATA',
     TOGGLE_INFO_MODAL = 'TOGGLE_INFO_MODAL'
 }
 
@@ -76,13 +75,15 @@ export const clearSelectedState = createAction(Type.CLEAR_STATE);
 
 // Second argument to these type of actionCreator is a function which modifies the payload
 // return { pyaload : something }
-export const setSelectedCountry = createAction<CombinedPayloads>(
+export const setSelectedCountryCode = createAction<CombinedPayloads>(
     Type.SET_COUNTRY
 );
-export const setSelectedState = createAction<CombinedPayloads>(Type.SET_STATE);
+export const setSelectedStateCode = createAction<CombinedPayloads>(
+    Type.SET_STATE
+);
 
-export const setSelectedDetails = createAction<ISetDetailsAction>(
-    Type.SET_MODAL_BODY
+export const setSelectedEntityData = createAction<ISetEntityDataAction>(
+    Type.SET_ENTITY_DATA
 );
 
 export const toggleInfoModal = createAction(Type.TOGGLE_INFO_MODAL);
@@ -92,6 +93,6 @@ export const appReducer = createReducer<IAppState>(initialAppState, {
     [Type.CLEAR_COUNTRY]: processClearCountry,
     [Type.SET_STATE]: processSelectedState,
     [Type.CLEAR_STATE]: processClearState,
-    [Type.SET_MODAL_BODY]: processSelectedDetails,
+    [Type.SET_ENTITY_DATA]: processSelectedEntityData,
     [Type.TOGGLE_INFO_MODAL]: processInfoModalToggle
 });

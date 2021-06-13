@@ -4,7 +4,7 @@ export type CityPayload = string;
 
 export type CombinedPayloads = CountryPayload | StatePayload | CityPayload;
 
-export type SelectedDetails = {
+export type ISelectedEntityData = {
     name: string | null;
     latitude: string | null;
     longitude: string | null;
@@ -16,18 +16,17 @@ export type IActionValueWP = {
     payload: CombinedPayloads;
 };
 
-export interface ISetDetailsActionWP {
-    payload: ISetDetailsAction;
+export interface ISetEntityDataActionWP {
+    payload: ISetEntityDataAction;
 }
 
-export interface ISetDetailsAction {
-    selectedDetails: SelectedDetails;
+export interface ISetEntityDataAction {
+    selectedEntityData: ISelectedEntityData;
 }
 
 export interface IAppState {
-    selectedState: string | null;
-    selectedCountry: string | null;
-    selectedCity: string | null;
+    selectedStateCode: string | null;
+    selectedCountryCode: string | null;
     isInfoModalOpen: boolean;
-    selectedDetails?: SelectedDetails;
+    selectedEntityData?: ISelectedEntityData;
 }

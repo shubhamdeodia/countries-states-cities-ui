@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../dux/hooks';
-import { setSelectedDetails, toggleInfoModal } from '../../dux/reducer';
-import { SelectedDetails } from '../../models/store';
+import { setSelectedEntityData, toggleInfoModal } from '../../dux/reducer';
+import { ISelectedEntityData } from '../../models/store';
 import { Container } from '../common/container';
 import useDebounce from '../common/hooks/useDebounce';
 import { ListItem } from '../common/list-item';
@@ -10,9 +10,12 @@ import { useCities } from './hooks/useCities';
 function Cities(): JSX.Element {
     const [cityQ, setCityQ] = useState('');
 
-    const selectedStateCode = useAppSelector((state) => state.selectedState);
+    const selectedStateCode = useAppSelector(
+        (state) => state.selectedStateCode
+    );
+
     const selectedCountryCode = useAppSelector(
-        (state) => state.selectedCountry
+        (state) => state.selectedCountryCode
     );
 
     const { data, isFetching } = useCities({
@@ -24,8 +27,8 @@ function Cities(): JSX.Element {
 
     const dispatch = useAppDispatch();
 
-    const onOpenModal = (countryDetails: SelectedDetails) => {
-        dispatch(setSelectedDetails({ selectedDetails: countryDetails }));
+    const onOpenModal = (countryData: ISelectedEntityData) => {
+        dispatch(setSelectedEntityData({ selectedEntityData: countryData }));
         dispatch(toggleInfoModal());
     };
 

@@ -82,8 +82,8 @@ function Container({
                 )}
                 {isFetching && <Text fontSize="2xl">Fetching ...</Text>}
                 {!isFetching && dataLength <= 0 && (
-                    <Text fontSize="3xl">
-                        Sorry we dont have sufficient data for this country
+                    <Text fontSize="2xl">
+                        Oops!! It seems we dont have sufficient data to do this
                     </Text>
                 )}
                 {children}
