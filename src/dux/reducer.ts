@@ -1,25 +1,34 @@
 import { createAction, createReducer } from '@reduxjs/toolkit';
-import { IAppState, IAction, CombinedPayloads } from '../models/store';
+import {
+    IAppState,
+    IActionValueWP,
+    CombinedPayloads,
+    ISetDetailsAction,
+    ISetDetailsActionWP
+} from '../models/store';
 
 export const initialAppState: IAppState = {
     selectedState: '',
     selectedCountry: '',
-    selectedCity: ''
+    selectedCity: '',
+    isInfoModalOpen: false,
+    selectedDetails: {
+        latitude: '',
+        longitude: '',
+        name: '',
+        country_code: '',
+        capital: ''
+    }
 };
 
-const processSelectedCountry = (state: IAppState, action: IAction) => ({
+const processSelectedCountry = (state: IAppState, action: IActionValueWP) => ({
     ...state,
     selectedCountry: action.payload
 });
 
-const processSelectedState = (state: IAppState, action: IAction) => ({
+const processSelectedState = (state: IAppState, action: IActionValueWP) => ({
     ...state,
     selectedState: action.payload
-});
-
-const processSelectedCity = (state: IAppState, action: IAction) => ({
-    ...state,
-    selectedCity: action.payload
 });
 
 const processClearCountry = (state: IAppState) => ({
@@ -32,9 +41,20 @@ const processClearState = (state: IAppState) => ({
     selectedState: ''
 });
 
-const processClearCity = (state: IAppState) => ({
+const processSelectedDetails = (
+    state: IAppState,
+    action: ISetDetailsActionWP
+) => ({
     ...state,
-    selectedCity: ''
+    selectedDetails: {
+        ...state.selectedDetails,
+        ...action.payload.selectedDetails
+    }
+});
+
+const processInfoModalToggle = (state: IAppState) => ({
+    ...state,
+    isInfoModalOpen: !state.isInfoModalOpen
 });
 
 export enum Type {
@@ -43,14 +63,16 @@ export enum Type {
     SET_STATE = 'SET_STATE',
     CLEAR_STATE = 'CLEAR_STATE',
     SET_CITY = 'SET_CITY',
-    CLEAR_CITY = 'CLEAR_CITY'
+    CLEAR_CITY = 'CLEAR_CITY',
+    SET_MODAL_BODY = 'SET_MODAL_BODY',
+    TOGGLE_INFO_MODAL = 'TOGGLE_INFO_MODAL'
 }
 
 // with createReducer
 // has no payload
 export const clearSelectedCountry = createAction(Type.CLEAR_COUNTRY);
 export const clearSelectedState = createAction(Type.CLEAR_STATE);
-export const clearSelectedCity = createAction(Type.CLEAR_CITY);
+// export const clearSelectedCity = createAction(Type.CLEAR_CITY);
 
 // Second argument to these type of actionCreator is a function which modifies the payload
 // return { pyaload : something }
@@ -58,37 +80,18 @@ export const setSelectedCountry = createAction<CombinedPayloads>(
     Type.SET_COUNTRY
 );
 export const setSelectedState = createAction<CombinedPayloads>(Type.SET_STATE);
-export const setSelectedCity = createAction<CombinedPayloads>(Type.SET_CITY);
+
+export const setSelectedDetails = createAction<ISetDetailsAction>(
+    Type.SET_MODAL_BODY
+);
+
+export const toggleInfoModal = createAction(Type.TOGGLE_INFO_MODAL);
 
 export const appReducer = createReducer<IAppState>(initialAppState, {
     [Type.SET_COUNTRY]: processSelectedCountry,
     [Type.CLEAR_COUNTRY]: processClearCountry,
     [Type.SET_STATE]: processSelectedState,
     [Type.CLEAR_STATE]: processClearState,
-    [Type.SET_CITY]: processSelectedCity,
-    [Type.CLEAR_CITY]: processClearCity
+    [Type.SET_MODAL_BODY]: processSelectedDetails,
+    [Type.TOGGLE_INFO_MODAL]: processInfoModalToggle
 });
-
-// with createSlice
-
-// export const counterSlice = createSlice({
-//     name: 'count',
-//     initialState: initialCounterState,
-//     reducers: {
-//         incrementCountByOne: processIncrement,
-//         decrementCountByOne: processDecrement,
-//         incrementByValue: processIncrementBy,
-//         decrementByValue: processDecrementBy,
-//     },
-// });
-
-// const { reducer } = counterSlice;
-
-// const {
-//     incrementCountByOne, decrementCountByOne, incrementByValue, decrementByValue,
-// } = counterSlice.actions;
-
-// export {
-//     reducer as counterReducer, incrementCountByOne,
-//     decrementCountByOne, incrementByValue, decrementByValue,
-// };

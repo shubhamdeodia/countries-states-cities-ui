@@ -1,4 +1,10 @@
-import { Flex, Box, useColorModeValue, HStack } from '@chakra-ui/react';
+import {
+    Flex,
+    Box,
+    useColorModeValue,
+    HStack,
+    Tooltip
+} from '@chakra-ui/react';
 import Flag from 'react-flagkit';
 import { ArrowForwardIcon, InfoIcon } from '@chakra-ui/icons';
 
@@ -9,6 +15,8 @@ type ListItemProps = {
     onClickInfo: () => void;
     onClickArrow?: () => void;
     name: string;
+    arrowIconTooltip?: string;
+    infoIconTooltip: string;
 };
 
 function ListItem({
@@ -16,7 +24,9 @@ function ListItem({
     emoji,
     name,
     onClickInfo,
-    onClickArrow
+    onClickArrow,
+    arrowIconTooltip,
+    infoIconTooltip
 }: ListItemProps): JSX.Element {
     const listBackground = useColorModeValue('teal.400', 'teal.700');
     return (
@@ -43,19 +53,34 @@ function ListItem({
                     <span>{name}</span>
                 </HStack>
                 <HStack spacing="2">
-                    <InfoIcon
-                        onClick={onClickInfo}
-                        sx={{
-                            cursor: 'pointer'
-                        }}
-                    />
-                    {typeof onClickArrow === 'function' && (
-                        <ArrowForwardIcon
-                            onClick={onClickArrow}
+                    <Tooltip
+                        hasArrow
+                        label={infoIconTooltip}
+                        bg="gray.300"
+                        color="black"
+                    >
+                        <InfoIcon
+                            onClick={onClickInfo}
                             sx={{
                                 cursor: 'pointer'
                             }}
                         />
+                    </Tooltip>
+
+                    {typeof onClickArrow === 'function' && (
+                        <Tooltip
+                            hasArrow
+                            label={arrowIconTooltip}
+                            bg="gray.300"
+                            color="black"
+                        >
+                            <ArrowForwardIcon
+                                onClick={onClickArrow}
+                                sx={{
+                                    cursor: 'pointer'
+                                }}
+                            />
+                        </Tooltip>
                     )}
                 </HStack>
             </Flex>

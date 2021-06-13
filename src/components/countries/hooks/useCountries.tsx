@@ -13,7 +13,7 @@ async function getCountries({
     let url = `/countries?_page=${pageNumber}&_limit=${limit}`;
 
     if (searchQuery) {
-        url = `/countries?q=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
+        url = `/countries?name=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
     }
 
     const { data } = await axiosInstance.get(url);
@@ -38,7 +38,9 @@ export function useCountries({
                 searchQuery
             }),
         {
-            keepPreviousData: false
+            keepPreviousData: false,
+            refetchOnWindowFocus: false,
+            staleTime: 5000
         }
     );
 

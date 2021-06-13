@@ -7,9 +7,13 @@ import { ICity } from '../../../models/city';
 async function getStates({
     pageNumber = 0,
     limit = pageSize,
-    selectedStateCode
+    selectedStateCode,
+    searchQuery
 }: IQueryParams): Promise<ICity[]> {
-    const url = `/cities?state_code=${selectedStateCode}&_page=${pageNumber}&_limit=${limit}`;
+    let url = `/cities?state_code=${selectedStateCode}&_page=${pageNumber}&_limit=${limit}`;
+    if (searchQuery) {
+        url = `/cities?state_code=${selectedStateCode}&name=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
+    }
 
     const { data } = await axiosInstance.get(url);
     return data;
@@ -18,7 +22,8 @@ async function getStates({
 export function useCities({
     pageNumber = 0,
     limit = pageSize,
-    selectedStateCode
+    selectedStateCode,
+    searchQuery
 }: IQueryParams): {
     data: ICity[];
     isFetching: boolean;
@@ -26,15 +31,18 @@ export function useCities({
     const fallback: ICity[] = [];
 
     const { data = fallback, isFetching } = useQuery(
-        [queryKeys.cities, selectedStateCode],
+        [queryKeys.cities, selectedStateCode, searchQuery],
         () =>
             getStates({
                 pageNumber,
                 limit,
-                selectedStateCode
+                selectedStateCode,
+                searchQuery
             }),
         {
-            keepPreviousData: false
+            keepPreviousData: false,
+            refetchOnWindowFocus: false,
+            staleTime: 5000
         }
     );
 

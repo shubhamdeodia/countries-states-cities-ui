@@ -7,9 +7,14 @@ import { IState } from '../../../models/state';
 async function getStates({
     pageNumber = 0,
     limit = pageSize,
-    selectedCountryCode
+    selectedCountryCode,
+    searchQuery
 }: IQueryParams): Promise<IState[]> {
-    const url = `/states?country_code=${selectedCountryCode}&_page=${pageNumber}&_limit=${limit}`;
+    let url = `/states?country_code=${selectedCountryCode}&_page=${pageNumber}&_limit=${limit}`;
+
+    if (searchQuery) {
+        url = `/states?country_code=${selectedCountryCode}&name=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
+    }
 
     const { data } = await axiosInstance.get(url);
     return data;
@@ -18,7 +23,8 @@ async function getStates({
 export function useStates({
     pageNumber = 0,
     limit = pageSize,
-    selectedCountryCode
+    selectedCountryCode,
+    searchQuery
 }: IQueryParams): {
     data: IState[];
     isFetching: boolean;
@@ -26,15 +32,18 @@ export function useStates({
     const fallback: IState[] = [];
 
     const { data = fallback, isFetching } = useQuery(
-        [queryKeys.states, selectedCountryCode],
+        [queryKeys.states, selectedCountryCode, searchQuery],
         () =>
             getStates({
                 pageNumber,
                 limit,
-                selectedCountryCode
+                selectedCountryCode,
+                searchQuery
             }),
         {
-            keepPreviousData: false
+            keepPreviousData: false,
+            refetchOnWindowFocus: false,
+            staleTime: 5000
         }
     );
 

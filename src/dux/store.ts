@@ -3,7 +3,7 @@ import { appReducer } from './reducer';
 
 const store = configureStore({
     reducer: appReducer,
-    devTools: true
+    devTools: process.env.NODE_ENV !== 'production'
 });
 
 export default store;
