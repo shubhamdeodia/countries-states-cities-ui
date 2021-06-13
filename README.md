@@ -37,9 +37,13 @@ The application is deployed on my private S3 Bucket on AWS, The app is being ser
 
 The app is divided into mainly four components 
 `countries` : all the code related to rendering the country list
+
 `cities`: all the code related to rendering the cities list
+
 `states`: all the code related to rendering the states list
+
 `common`: common components and utils that is used by the above components
+
 ```
 ├── babel.config.js
 ├── config
