@@ -36,6 +36,7 @@ The application is deployed on my private S3 Bucket on AWS, The app is being ser
 # The Code
 
 The app is divided into mainly four components 
+
 `countries` : all the code related to rendering the country list
 
 `cities`: all the code related to rendering the cities list
