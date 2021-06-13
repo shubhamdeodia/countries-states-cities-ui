@@ -18,22 +18,27 @@ type InforModalProps = {
 };
 
 function InfoModal({ isOpen, onClose }: InforModalProps): JSX.Element {
-    const selectedDetails = useAppSelector((state) => state.selectedEntityData);
+    const selectedData = useAppSelector((state) => state.selectedEntityData);
 
+    console.log(
+        '%c 😳: selectedData ',
+        'font-size:16px;background-color:#ca8bd9;color:white;',
+        selectedData
+    );
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>{selectedDetails.name}</ModalHeader>
+                    <ModalHeader>{selectedData.name}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        {Object.keys(selectedDetails).map(
+                        {Object.keys(selectedData).map(
                             (key: keyof ISelectedEntityData) =>
-                                selectedDetails[key] && (
+                                selectedData[key] && (
                                     <Text
                                         key={key}
-                                    >{`${key} : ${selectedDetails[key]}`}</Text>
+                                    >{`${key} : ${selectedData[key]}`}</Text>
                                 )
                         )}
                     </ModalBody>

@@ -45,7 +45,7 @@ const processSelectedEntityData = (
     action: ISetEntityDataActionWP
 ) => ({
     ...state,
-    selectedDetails: {
+    selectedEntityData: {
         ...state.selectedEntityData,
         ...action.payload.selectedEntityData
     }
