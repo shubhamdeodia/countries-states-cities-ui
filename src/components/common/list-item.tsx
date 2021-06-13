@@ -5,7 +5,8 @@ import {
     HStack,
     Tooltip
 } from '@chakra-ui/react';
-import Flag from 'react-flagkit';
+
+import ReactCountryFlag from 'react-country-flag';
 import { ArrowForwardIcon, InfoIcon } from '@chakra-ui/icons';
 
 type ListItemProps = {
@@ -28,6 +29,11 @@ function ListItem({
     arrowIconTooltip,
     infoIconTooltip
 }: ListItemProps): JSX.Element {
+    console.log(
+        '%c 🇦🇬: countryCode ',
+        'font-size:16px;background-color:#cfb248;color:white;',
+        countryCode
+    );
     const listBackground = useColorModeValue('teal.400', 'teal.700');
     return (
         <Box
@@ -47,8 +53,17 @@ function ListItem({
                 w={240}
                 alignItems="center"
             >
-                <HStack spacing="2">
-                    {countryCode && <Flag country={countryCode} />}
+                <HStack alignItems="center" spacing="2">
+                    {countryCode && (
+                        <ReactCountryFlag
+                            countryCode={countryCode}
+                            svg
+                            style={{
+                                fontSize: '1.2em',
+                                lineHeight: '1.2em'
+                            }}
+                        />
+                    )}
                     <span>{emoji}</span>
                     <span>{name}</span>
                 </HStack>

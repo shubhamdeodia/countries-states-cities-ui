@@ -16,7 +16,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(css|scss)$/,
+                test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
                 exclude: /node_modules/
             },
@@ -34,7 +34,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './public/index.html'
+            template: './public/index.html',
+            favicon: './public/favicon.png'
         }),
         new CleanWebpackPlugin()
     ]
