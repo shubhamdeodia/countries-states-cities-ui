@@ -20,6 +20,8 @@ type ContainerProps = {
     setInputValue?: (name: string) => void;
     onRemoveTag?: () => void;
     inputValue: string;
+    dataLength: number;
+    isFetching: boolean;
     searchPlaceHolder?: string;
     disableSearch?: boolean;
 };
@@ -29,8 +31,10 @@ function Container({
     title,
     disableSearch,
     tagLabel,
+    dataLength,
     onRemoveTag,
     setInputValue,
+    isFetching,
     searchPlaceHolder,
     inputValue
 }: ContainerProps): JSX.Element {
@@ -75,6 +79,12 @@ function Container({
                         <TagLabel>{tagLabel}</TagLabel>
                         <TagCloseButton onClick={onRemoveTag} />
                     </Tag>
+                )}
+                {isFetching && <Text fontSize="2xl">Fetching ...</Text>}
+                {!isFetching && dataLength <= 0 && (
+                    <Text fontSize="3xl">
+                        Sorry we dont have sufficient data for this country
+                    </Text>
                 )}
                 {children}
             </Stack>

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Text, useDisclosure } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from '../../dux/hooks';
 import {
     clearSelectedCountry,
@@ -12,7 +11,6 @@ import { useCountries } from './hooks/useCountries';
 import { Container } from '../common/container';
 import { ListItem } from '../common/list-item';
 import { useUnmountEffect } from '../common/hooks/useUnmountEffect';
-import { InfoModal } from '../common/info-modal';
 import { SelectedDetails } from '../../models/store';
 
 function Countries(): JSX.Element {
@@ -46,18 +44,14 @@ function Countries(): JSX.Element {
         <>
             <Container
                 title="Countries"
+                isFetching={isFetching}
+                dataLength={data.length}
                 searchPlaceHolder="ex: India"
                 setInputValue={setCountryQ}
                 inputValue={countryQ}
                 tagLabel={selectedCountryCode}
                 onRemoveTag={clearSelectedCountryCode}
             >
-                {isFetching && <Text fontSize="2xl">Fetching ...</Text>}
-                {!isFetching && data.length <= 0 && (
-                    <Text fontSize="3xl">
-                        Sorry we dont have sufficient data for this country
-                    </Text>
-                )}
                 {data?.map((country) => (
                     <ListItem
                         arrowIconTooltip="show states"

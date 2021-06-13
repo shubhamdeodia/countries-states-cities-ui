@@ -13,7 +13,7 @@ async function getStates({
     let url = `/states?country_code=${selectedCountryCode}&_page=${pageNumber}&_limit=${limit}`;
 
     if (searchQuery) {
-        url = `/states?country_code=${selectedCountryCode}&name=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
+        url = `/states?country_code=${selectedCountryCode}&q=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
     }
 
     const { data } = await axiosInstance.get(url);

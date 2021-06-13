@@ -7,12 +7,13 @@ import { ICity } from '../../../models/city';
 async function getStates({
     pageNumber = 0,
     limit = pageSize,
+    selectedCountryCode,
     selectedStateCode,
     searchQuery
 }: IQueryParams): Promise<ICity[]> {
-    let url = `/cities?state_code=${selectedStateCode}&_page=${pageNumber}&_limit=${limit}`;
+    let url = `/cities?country_code=${selectedCountryCode}&state_code=${selectedStateCode}&_page=${pageNumber}&_limit=${limit}`;
     if (searchQuery) {
-        url = `/cities?state_code=${selectedStateCode}&name=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
+        url = `/cities?country_code=${selectedCountryCode}&state_code=${selectedStateCode}&q=${searchQuery}&_page=${pageNumber}&_limit=${limit}`;
     }
 
     const { data } = await axiosInstance.get(url);
@@ -23,6 +24,7 @@ export function useCities({
     pageNumber = 0,
     limit = pageSize,
     selectedStateCode,
+    selectedCountryCode,
     searchQuery
 }: IQueryParams): {
     data: ICity[];
@@ -37,6 +39,7 @@ export function useCities({
                 pageNumber,
                 limit,
                 selectedStateCode,
+                selectedCountryCode,
                 searchQuery
             }),
         {

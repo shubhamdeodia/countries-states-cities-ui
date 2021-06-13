@@ -1,4 +1,3 @@
-import { Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../dux/hooks';
 import { setSelectedDetails, toggleInfoModal } from '../../dux/reducer';
@@ -12,9 +11,13 @@ function Cities(): JSX.Element {
     const [cityQ, setCityQ] = useState('');
 
     const selectedStateCode = useAppSelector((state) => state.selectedState);
+    const selectedCountryCode = useAppSelector(
+        (state) => state.selectedCountry
+    );
 
     const { data, isFetching } = useCities({
         selectedStateCode,
+        selectedCountryCode,
         pageNumber: 1,
         searchQuery: useDebounce(cityQ, 600)
     });
@@ -30,32 +33,27 @@ function Cities(): JSX.Element {
         <>
             <Container
                 title="Cities"
+                isFetching={isFetching}
+                dataLength={data.length}
                 searchPlaceHolder="ex: Pune"
                 setInputValue={setCityQ}
                 inputValue={cityQ}
             >
-                {isFetching && <Text fontSize="2xl">Fetching ...</Text>}
-                {!isFetching && data.length <= 0 && (
-                    <Text fontSize="3xl">
-                        Sorry we dont have sufficient data for this state
-                    </Text>
-                )}
-                {!isFetching &&
-                    data?.map((city) => (
-                        <ListItem
-                            infoIconTooltip="show more info"
-                            key={city.id}
-                            name={city.name}
-                            onClickInfo={() =>
-                                onOpenModal({
-                                    country_code: city.country_code,
-                                    latitude: city.latitude,
-                                    longitude: city.longitude,
-                                    name: city.name
-                                })
-                            }
-                        />
-                    ))}
+                {data?.map((city) => (
+                    <ListItem
+                        infoIconTooltip="show more info"
+                        key={city.id}
+                        name={city.name}
+                        onClickInfo={() =>
+                            onOpenModal({
+                                country_code: city.country_code,
+                                latitude: city.latitude,
+                                longitude: city.longitude,
+                                name: city.name
+                            })
+                        }
+                    />
+                ))}
             </Container>
         </>
     );

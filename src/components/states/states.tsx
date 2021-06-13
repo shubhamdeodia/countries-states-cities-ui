@@ -1,4 +1,3 @@
-import { Text, useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../dux/hooks';
 import {
@@ -16,7 +15,6 @@ import { useStates } from './hooks/useStates';
 
 function States(): JSX.Element {
     const [stateQ, setStateQ] = useState('');
-    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const selectedStateCode = useAppSelector((state) => state.selectedState);
     const selectedCountryCode = useAppSelector(
@@ -45,6 +43,8 @@ function States(): JSX.Element {
     return (
         <>
             <Container
+                isFetching={isFetching}
+                dataLength={data.length}
                 title="States"
                 searchPlaceHolder="ex: Maharashtra"
                 setInputValue={setStateQ}
@@ -52,33 +52,26 @@ function States(): JSX.Element {
                 tagLabel={selectedStateCode}
                 onRemoveTag={clearSelectedStateCode}
             >
-                {isFetching && <Text fontSize="2xl">Fetching ...</Text>}
-                {!isFetching && data.length <= 0 && (
-                    <Text fontSize="3xl">
-                        Sorry we dont have sufficient data for this country
-                    </Text>
-                )}
-                {!isFetching &&
-                    data?.map((state) => (
-                        <ListItem
-                            key={state.id}
-                            arrowIconTooltip="show cities"
-                            infoIconTooltip="show more info"
-                            name={state.name}
-                            emoji={state.state_code}
-                            onClickInfo={() =>
-                                onOpenModal({
-                                    country_code: state.country_code,
-                                    latitude: state.latitude,
-                                    longitude: state.longitude,
-                                    name: state.name
-                                })
-                            }
-                            onClickArrow={() =>
-                                setSelectedStateCode(state.state_code)
-                            }
-                        />
-                    ))}
+                {data?.map((state) => (
+                    <ListItem
+                        key={state.id}
+                        arrowIconTooltip="show cities"
+                        infoIconTooltip="show more info"
+                        name={state.name}
+                        emoji={state.state_code}
+                        onClickInfo={() =>
+                            onOpenModal({
+                                country_code: state.country_code,
+                                latitude: state.latitude,
+                                longitude: state.longitude,
+                                name: state.name
+                            })
+                        }
+                        onClickArrow={() =>
+                            setSelectedStateCode(state.state_code)
+                        }
+                    />
+                ))}
             </Container>
         </>
     );

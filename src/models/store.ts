@@ -28,6 +28,6 @@ export interface IAppState {
     selectedState: string | null;
     selectedCountry: string | null;
     selectedCity: string | null;
-    isInfoModalOpen: booelan;
+    isInfoModalOpen: boolean;
     selectedDetails?: SelectedDetails;
 }
