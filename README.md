@@ -28,7 +28,7 @@ The application uses various latest tools and framework in the React ecosystem,
 
 [Redux-Toolkit](https://redux-toolkit.js.org/): State management library with best practices
 
-[React-Query](): Server-side state manage library
+[React-Query](https://react-query.tanstack.com/): Server-side state manage library
 
 # Deployment:
 The application is deployed on my private S3 Bucket on AWS, The app is being served from a Cloudfront Distribution, which cache the complete application on the edge location, delivering a fast user experience.
