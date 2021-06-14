@@ -42,7 +42,6 @@ function Container({
 
     return (
         <Flex
-            maxH={654}
             minH={654}
             maxW={352}
             direction="column"
