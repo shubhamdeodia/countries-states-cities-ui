@@ -43,6 +43,7 @@ function Container({
     return (
         <Flex
             maxH={654}
+            minH={654}
             maxW={352}
             direction="column"
             background={formBackground}
@@ -83,7 +84,7 @@ function Container({
                 {isFetching && <Text fontSize="2xl">Fetching ...</Text>}
                 {!isFetching && dataLength <= 0 && (
                     <Text fontSize="2xl">
-                        Oops!! It seems we dont have sufficient data to do this
+                        Oops!! It seems we dont have sufficient data show this
                     </Text>
                 )}
                 {children}

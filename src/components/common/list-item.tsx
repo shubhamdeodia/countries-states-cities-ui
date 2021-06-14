@@ -29,7 +29,6 @@ function ListItem({
     arrowIconTooltip,
     infoIconTooltip
 }: ListItemProps): JSX.Element {
-
     const listBackground = useColorModeValue('teal.400', 'teal.700');
     return (
         <Box

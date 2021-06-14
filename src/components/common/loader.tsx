@@ -1,5 +1,4 @@
 import { Spinner, Text } from '@chakra-ui/react';
-import { ReactElement } from 'react';
 import { useIsFetching } from 'react-query';
 
 export function Loader(): JSX.Element {
