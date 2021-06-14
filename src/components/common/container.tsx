@@ -42,7 +42,7 @@ function Container({
 
     return (
         <Flex
-            minH={654}
+            maxH={654}
             maxW={352}
             direction="column"
             background={formBackground}

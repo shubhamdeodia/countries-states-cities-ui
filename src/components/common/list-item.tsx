@@ -29,11 +29,7 @@ function ListItem({
     arrowIconTooltip,
     infoIconTooltip
 }: ListItemProps): JSX.Element {
-    console.log(
-        '%c 🇦🇬: countryCode ',
-        'font-size:16px;background-color:#cfb248;color:white;',
-        countryCode
-    );
+
     const listBackground = useColorModeValue('teal.400', 'teal.700');
     return (
         <Box

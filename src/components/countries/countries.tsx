@@ -52,26 +52,28 @@ function Countries(): JSX.Element {
                 tagLabel={selectedCountryCode}
                 onRemoveTag={clearSelectedCountryCode}
             >
-                {data?.map((country) => (
-                    <ListItem
-                        arrowIconTooltip="show states"
-                        infoIconTooltip="show more info"
-                        key={country.id}
-                        countryCode={country.iso2}
-                        name={country.name}
-                        emoji={country.emoji}
-                        onClickInfo={() =>
-                            onOpenModal({
-                                country_code: country.iso3,
-                                latitude: country.latitude,
-                                longitude: country.longitude,
-                                name: country.name,
-                                capital: country.capital
-                            })
-                        }
-                        onClickArrow={() => setCountryCode(country.iso2)}
-                    />
-                ))}
+                {data
+                    ?.map((country) => (
+                        <ListItem
+                            arrowIconTooltip="show states"
+                            infoIconTooltip="show more info"
+                            key={country.id}
+                            countryCode={country.iso2}
+                            name={country.name}
+                            emoji={country.emoji}
+                            onClickInfo={() =>
+                                onOpenModal({
+                                    country_code: country.iso3,
+                                    latitude: country.latitude,
+                                    longitude: country.longitude,
+                                    name: country.name,
+                                    capital: country.capital
+                                })
+                            }
+                            onClickArrow={() => setCountryCode(country.iso2)}
+                        />
+                    ))
+                    .slice(0, 6)}
             </Container>
         </>
     );

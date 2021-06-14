@@ -20,11 +20,6 @@ type InforModalProps = {
 function InfoModal({ isOpen, onClose }: InforModalProps): JSX.Element {
     const selectedData = useAppSelector((state) => state.selectedEntityData);
 
-    console.log(
-        '%c 😳: selectedData ',
-        'font-size:16px;background-color:#ca8bd9;color:white;',
-        selectedData
-    );
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose}>
