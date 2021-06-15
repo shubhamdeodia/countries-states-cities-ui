@@ -3,6 +3,9 @@ It's a simple tempalte which utilize the power of React, React-query, Redux-Quer
 
 ### Available Script
 
+Install dependencies
+`npm install`
+
 Dev
 `npm run start`
 
